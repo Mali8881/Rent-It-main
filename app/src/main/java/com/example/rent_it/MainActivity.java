@@ -84,7 +84,19 @@ public class MainActivity extends AppCompatActivity {
                                         ? FirebaseAuth.getInstance().getCurrentUser().getUid()
                                         : "test_user",
                                 "Тестовое название " + i,
-                                "example" + i + "@gmail.com"
+                                "example" + i + "@gmail.com",
+                                "10000",
+                                "Бишкек",
+                                "2",
+                                "1",
+                                "55",
+                                "Квартира",
+                                "Многоэтажка",
+                                "Центральное",
+                                true,
+                                "WiFi, Парковка",
+                                "4.5",
+                                System.currentTimeMillis()
                         );
 
                         postsRef.child(postId).setValue(post);

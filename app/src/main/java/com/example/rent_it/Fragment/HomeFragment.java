@@ -1,10 +1,12 @@
 package com.example.rent_it.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rent_it.Adapter.PostAdapter;
 import com.example.rent_it.Model.Post;
 import com.example.rent_it.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,83 +27,110 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private Spinner spinnerType, spinnerHeating, spinnerWifi;
     private RecyclerView recyclerView;
+    private List<Post> postList;
     private PostAdapter postAdapter;
-    private List<Post> postLists;
-    private List<String> followingList;
+    private DatabaseReference postsRef;
+
+    private String selectedType = "Все";
+    private String selectedHeating = "Все";
+    private String selectedWifi = "Все";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView=view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        postLists=new ArrayList<>();
-        postAdapter=new PostAdapter(getContext(),postLists);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        spinnerType = view.findViewById(R.id.spinner_type);
+        spinnerHeating = view.findViewById(R.id.spinner_heating);
+        spinnerWifi = view.findViewById(R.id.spinner_wifi);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
-        try {
-            checkFollowing();
-        }catch (Exception e){
-            Log.d("CheckFollow", "Check: "+e.getMessage());
-        }
 
+        postsRef = FirebaseDatabase.getInstance().getReference("Posts");
 
+        setupSpinner(spinnerType, R.array.type_options);
+        setupSpinner(spinnerHeating, R.array.heating_options);
+        setupSpinner(spinnerWifi, R.array.wifi_options);
+
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedType = spinnerType.getSelectedItem().toString();
+                selectedHeating = spinnerHeating.getSelectedItem().toString();
+                selectedWifi = spinnerWifi.getSelectedItem().toString();
+                filterPosts();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+
+        spinnerType.setOnItemSelectedListener(listener);
+        spinnerHeating.setOnItemSelectedListener(listener);
+        spinnerWifi.setOnItemSelectedListener(listener);
+
+        loadAllPosts(); // Загрузим сначала все
         return view;
     }
 
-    private void checkFollowing(){
-        followingList=new ArrayList<>();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Follow").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("following");
-        reference.addValueEventListener(new ValueEventListener() {
+    private void setupSpinner(Spinner spinner, int arrayResId) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireContext(), arrayResId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    private void loadAllPosts() {
+        postsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                followingList.clear();
-                for (DataSnapshot s: snapshot.getChildren()){
-                    followingList.add(s.getKey());
+                postList.clear();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    Post post = snap.getValue(Post.class);
+                    if (post != null) {
+                        postList.add(post);
+                    }
                 }
-                readPosts();
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
-    private void readPosts(){
+    private void filterPosts() {
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList.clear();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    Post post = snap.getValue(Post.class);
+                    if (post != null) {
+                        boolean matchesType = selectedType.equals("Все") || selectedType.equals(post.getType());
+                        boolean matchesHeating = selectedHeating.equals("Все") || selectedHeating.equals(post.getHeating());
+                        boolean matchesWifi = selectedWifi.equals("Все") ||
+                                selectedWifi.equals(post.getWifi());
 
-        try {
-            DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Posts");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    postLists.clear();
-                    for (DataSnapshot snapshot1:snapshot.getChildren()){
-                        Post post=snapshot1.getValue(Post.class);
-                        postLists.add(post);
-                        //when want to see the posts that you are following only
-//                        for(String id:followingList){
-//                            if(post.getPublisher().equals(id)){
-//                                postLists.add(post);
-//                            }
-//                        }
+
+                        if (matchesType && matchesHeating && matchesWifi) {
+                            postList.add(post);
+                        }
                     }
-                    postAdapter.notifyDataSetChanged();
                 }
+                postAdapter.notifyDataSetChanged();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }catch (Exception e){
-            Log.d("ReadPost", "Read: "+e.getMessage());
-        }
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }

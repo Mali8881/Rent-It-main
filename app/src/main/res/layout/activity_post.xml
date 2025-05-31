@@ -118,6 +118,29 @@
                 android:background="@drawable/edit_text_bg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/property_types" />
+
+            <Spinner
+                android:id="@+id/spinner_building_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/building_types" />
+
+            <Spinner
+                android:id="@+id/spinner_heating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/heating_types" />
+
+            <Spinner
+                android:id="@+id/spinner_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/wifi_options" />
 
             <EditText
                 android:id="@+id/area"

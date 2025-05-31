@@ -1,0 +1,41 @@
+<resources>
+    <string-array name="property_types">
+        <item>Квартира</item>
+        <item>Дом</item>
+        <item>Комната</item>
+        <item>Офис</item>
+    </string-array>
+
+    <string-array name="building_types">
+        <item>Многоэтажка</item>
+        <item>Частный дом</item>
+        <item>Бизнес-центр</item>
+        <item>Гостиница</item>
+    </string-array>
+
+    <string-array name="heating_types">
+        <item>Центральное</item>
+        <item>Индивидуальное</item>
+        <item>Без отопления</item>
+    </string-array>
+
+    <string-array name="wifi_options">
+        <item>Да</item>
+        <item>Нет</item>
+    </string-array>
+
+    <string-array name="type_options">
+        <item>Все</item>
+        <item>Квартира</item>
+        <item>Дом</item>
+        <item>Комната</item>
+        <item>Офис</item>
+    </string-array>
+
+    <string-array name="heating_options">
+        <item>Все</item>
+        <item>Центральное</item>
+        <item>Индивидуальное</item>
+        <item>Без отопления</item>
+    </string-array>
+</resources>

@@ -1,5 +1,7 @@
 package com.example.rent_it;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rent_it.Adapter.CommentAdapter;
 import com.example.rent_it.Model.Comment;
+import com.example.rent_it.Model.Post;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 
@@ -30,6 +33,7 @@ public class CommentsActivity extends AppCompatActivity {
     private CommentAdapter adapter;
     private String postId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,12 @@ public class CommentsActivity extends AppCompatActivity {
 
         postId = getIntent().getStringExtra("postId");
 
+        if (postId == null) {
+            Toast.makeText(this, "Ошибка: нет ID поста", Toast.LENGTH_SHORT).show();
+            finish(); // Закрыть экран, если нет postId
+            return;
+        }
+
         commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentList = new ArrayList<>();
         adapter = new CommentAdapter(commentList);
@@ -51,6 +61,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         loadComments();
     }
+
 
     private void submitComment() {
         String commentText = commentEditText.getText().toString().trim();

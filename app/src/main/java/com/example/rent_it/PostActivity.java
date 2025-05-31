@@ -5,22 +5,17 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -35,9 +30,11 @@ public class PostActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private UploadTask uploadTask;
 
-    // Поля ввода
+    // View элементы
     private EditText etDescription, etTitle, etPrice, etLocation,
-            etBedrooms, etBathrooms, etArea, etType, etAmenities;
+            etBedrooms, etBathrooms, etArea, etAmenities;
+
+    private Spinner spinnerType, spinnerBuildingType, spinnerHeating, spinnerWifi;
 
     private ImageView image_added, close;
     private TextView post;
@@ -47,7 +44,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        // Инициализация View
+        // Инициализация EditText
         etDescription = findViewById(R.id.description);
         etTitle = findViewById(R.id.title);
         etPrice = findViewById(R.id.price);
@@ -55,9 +52,15 @@ public class PostActivity extends AppCompatActivity {
         etBedrooms = findViewById(R.id.bedrooms);
         etBathrooms = findViewById(R.id.bathrooms);
         etArea = findViewById(R.id.area);
-        etType = findViewById(R.id.type);
         etAmenities = findViewById(R.id.amenities);
 
+        // Инициализация Spinner
+        spinnerType = findViewById(R.id.spinner_type);
+        spinnerBuildingType = findViewById(R.id.spinner_building_type);
+        spinnerHeating = findViewById(R.id.spinner_heating);
+        spinnerWifi = findViewById(R.id.spinner_wifi);
+
+        // Инициализация кнопок
         image_added = findViewById(R.id.image_added);
         close = findViewById(R.id.close);
         post = findViewById(R.id.post);
@@ -122,7 +125,7 @@ public class PostActivity extends AppCompatActivity {
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("postId", postId);
-        hashMap.put("postImage", myUrl);
+        hashMap.put("image", myUrl);
         hashMap.put("description", etDescription.getText().toString());
         hashMap.put("title", etTitle.getText().toString());
         hashMap.put("publisher", userId);
@@ -130,11 +133,16 @@ public class PostActivity extends AppCompatActivity {
         hashMap.put("price", etPrice.getText().toString());
         hashMap.put("location", etLocation.getText().toString());
 
-        // Дополнительные поля
+        // Поля из Spinner
+        hashMap.put("type", spinnerType.getSelectedItem().toString());
+        hashMap.put("buildingType", spinnerBuildingType.getSelectedItem().toString());
+        hashMap.put("heating", spinnerHeating.getSelectedItem().toString());
+        hashMap.put("wifi", spinnerWifi.getSelectedItem().toString());
+
+        // Остальные поля
         hashMap.put("bedrooms", etBedrooms.getText().toString());
         hashMap.put("bathrooms", etBathrooms.getText().toString());
         hashMap.put("area", etArea.getText().toString());
-        hashMap.put("type", etType.getText().toString());
         hashMap.put("amenities", etAmenities.getText().toString());
         hashMap.put("rating", "0");
         hashMap.put("reviewCount", "0");

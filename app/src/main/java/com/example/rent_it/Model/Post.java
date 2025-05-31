@@ -1,7 +1,8 @@
+// Post.java — обновлённая модель с полями для фильтрации
 package com.example.rent_it.Model;
 
 public class Post {
-
+    private long floor;
     private String postId;
     private String image;
     private String description;
@@ -14,16 +15,19 @@ public class Post {
     private String bathrooms;
     private String area;
     private String type;
+    private String buildingType;
+    private String heating;         // Новое поле
+    private String wifi;       // Новое поле
     private String amenities;
-    private String rating;     // изменено с float на String
+
+    private String rating;
     private long timestamp;
 
     public Post() {}
 
-    public Post(String postId, String image, String description, String publisher,
-                String title, String email, String price, String location,
-                String bedrooms, String bathrooms, String area, String type,
-                String amenities, String rating, long timestamp) {
+    public Post(String postId, String image, String description, String publisher, String title, String email, String price,
+                String location, String bedrooms, String bathrooms, String area, String type, String buildingType,
+                String heating,String wifi,  String amenities, String rating, long timestamp) {
         this.postId = postId;
         this.image = image;
         this.description = description;
@@ -36,32 +40,18 @@ public class Post {
         this.bathrooms = bathrooms;
         this.area = area;
         this.type = type;
+        this.buildingType = buildingType;
+        this.heating = heating;
+        this.wifi = wifi;
         this.amenities = amenities;
         this.rating = rating;
         this.timestamp = timestamp;
     }
 
-    public Post(String postId, String image, String description, String publisher,
-                String title, String email) {
-        this.postId = postId;
-        this.image = image;
-        this.description = description;
-        this.publisher = publisher;
-        this.title = title;
-        this.email = email;
-        this.price = "0";
-        this.location = "Не указано";
-        this.bedrooms = "1";
-        this.bathrooms = "1";
-        this.area = "25";
-        this.type = "Квартира";
-        this.amenities = "Wi-Fi, Парковка";
-        this.rating = "0.0";
-        this.timestamp = System.currentTimeMillis();
+    public Post(String postId, String s, String s1, String s2, String s3, String s4, String number, String бишкек, String number1, String number2, String number3, String квартира, String многоэтажка, String центральное, boolean b, String s5, String s6, long l) {
     }
 
     // --- Getters and Setters ---
-
     public String getPostId() { return postId; }
     public void setPostId(String postId) { this.postId = postId; }
 
@@ -97,6 +87,21 @@ public class Post {
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
+    public String getWifi() {
+        return wifi;
+    }
+
+    public void setWifi(String wifi) {
+        this.wifi = wifi;
+    }
+
+    public String getBuildingType() { return buildingType; }
+    public void setBuildingType(String buildingType) { this.buildingType = buildingType; }
+
+    public String getHeating() { return heating; }
+    public void setHeating(String heating) { this.heating = heating; }
+
+
 
     public String getAmenities() { return amenities; }
     public void setAmenities(String amenities) { this.amenities = amenities; }
@@ -106,4 +111,9 @@ public class Post {
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+
+    public long getFloor() { return floor; }
+
+    public void setFloor(long floor) { this.floor = floor; }
 }
