@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:background="#1E1E1E" />
+
+    <TextView
+        android:text="Оставьте отзыв"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:layout_marginBottom="16dp"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:isIndicator="false" />
+
+    <EditText
+        android:id="@+id/commentEditText"
+        android:hint="Ваш комментарий"
+        android:textColorHint="#AAAAAA"
+        android:textColor="#FFFFFF"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="12dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="top"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/submitCommentBtn"
+        android:text="Отправить"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4A90E2"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

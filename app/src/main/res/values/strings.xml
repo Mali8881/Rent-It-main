@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Общий стиль приложения -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:buttonStyle">@style/CustomButton</item>
+    </style>
+
+    <!-- Стиль кнопок -->
+    <style name="CustomButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:backgroundTint">#4A90E2</item>
+    </style>
+
+</resources>

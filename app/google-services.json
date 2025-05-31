@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "386855361628",
+    "project_id": "ritbook-47bba",
+    "storage_bucket": "ritbook-47bba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386855361628:android:bf4dbe60355c62371d1a99",
+        "android_client_info": {
+          "package_name": "com.example.rent_it"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAILCKuHV0Zyw4PRnBDD8I9M1XQFms3dzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

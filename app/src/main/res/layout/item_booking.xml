@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1E1E1E"
+    android:elevation="4dp"
+    android:radius="12dp">
+
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvBookingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Название жилья"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvBookingDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="01.06.2025 - 05.06.2025"
+            android:textColor="#CCCCCC"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvBookingStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Статус: в ожидании"
+            android:textColor="#4A90E2"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
