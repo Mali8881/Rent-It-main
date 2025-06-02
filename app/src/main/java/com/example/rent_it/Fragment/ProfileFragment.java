@@ -1,5 +1,6 @@
 package com.example.rent_it.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.rent_it.FavoritesActivity;
 import com.example.rent_it.Model.User;
 import com.example.rent_it.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
-
 public class ProfileFragment extends Fragment {
 
     private ImageView profileImage;
-    private TextView username, email, bio;
+    private TextView username, email, bio, favoritesButton;
 
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
         username = view.findViewById(R.id.username);
         email = view.findViewById(R.id.email);
         bio = view.findViewById(R.id.bio);
+        favoritesButton = view.findViewById(R.id.favorites_button);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -53,14 +55,19 @@ public class ProfileFragment extends Fragment {
 
                 Glide.with(requireContext())
                         .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_person)  // картинка по умолчанию
-                        .error(R.drawable.ic_person)        // если не загрузилось
+                        .placeholder(R.drawable.ic_person)
+                        .error(R.drawable.ic_person)
                         .into(profileImage);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+        // ⬇⬇⬇ Добавь сюда обработку нажатия
+        favoritesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), FavoritesActivity.class);
+            startActivity(intent);
         });
 
         return view;

@@ -50,14 +50,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         try {
             Glide.with(mContext).load(post.getImage()).into(holder.post_image);
 
-            holder.discription.setVisibility(post.getDescription().isEmpty() ? View.GONE : View.VISIBLE);
-            holder.discription.setText(post.getDescription());
+            if (post.getDescription() != null && !post.getDescription().isEmpty()) {
+                holder.description.setVisibility(View.VISIBLE);
+                holder.description.setText(post.getDescription());
+            } else {
+                holder.description.setVisibility(View.GONE);
+            }
 
-            holder.title.setVisibility(post.getTitle().isEmpty() ? View.GONE : View.VISIBLE);
-            holder.title.setText(post.getTitle());
+            if (post.getTitle() != null && !post.getTitle().isEmpty()) {
+                holder.title.setVisibility(View.VISIBLE);
+                holder.title.setText(post.getTitle());
+            } else {
+                holder.title.setVisibility(View.GONE);
+            }
 
-            holder.email.setVisibility(post.getEmail().isEmpty() ? View.GONE : View.VISIBLE);
-            holder.email.setText(post.getEmail());
+            if (post.getEmail() != null && !post.getEmail().isEmpty()) {
+                holder.email.setVisibility(View.VISIBLE);
+                holder.email.setText(post.getEmail());
+            } else {
+                holder.email.setVisibility(View.GONE);
+            }
 
             publisherInfo(holder.image_profile, holder.username, holder.email, holder.publisher, post.getPublisher());
             isLiked(post.getPostId(), holder.like);
@@ -84,8 +96,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             holder.comments.setOnClickListener(commentsClickListener);
             holder.comment.setOnClickListener(commentsClickListener);
 
-            // Клик на карточку: передаём все поля
             holder.itemView.setOnClickListener(v -> {
+                Log.d("POST_CLICK", "Нажатие на пост: " + post.getTitle());
                 Intent intent = new Intent(mContext, DetailsActivity.class);
                 intent.putExtra("postId", post.getPostId());
                 intent.putExtra("title", post.getTitle());
@@ -94,15 +106,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 intent.putExtra("location", post.getLocation());
                 intent.putExtra("author", post.getEmail());
                 intent.putExtra("image", post.getImage());
-
                 intent.putExtra("bedrooms", post.getBedrooms());
                 intent.putExtra("bathrooms", post.getBathrooms());
                 intent.putExtra("area", post.getArea());
                 intent.putExtra("type", post.getType());
-
-                // ✅ amenities как String, не List
                 intent.putExtra("amenities", post.getAmenities());
-
                 intent.putExtra("rating", post.getRating());
                 mContext.startActivity(intent);
             });
@@ -119,21 +127,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image_profile, post_image, like, comment, save;
-        public TextView username, likes, publisher, discription, comments, title, email;
+        public TextView username, likes, publisher, description, comments, title, email, location;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image_profile = itemView.findViewById(R.id.image_profile);
             post_image = itemView.findViewById(R.id.post_image);
             like = itemView.findViewById(R.id.like);
-            likes = itemView.findViewById(R.id.likes);
             comment = itemView.findViewById(R.id.comment);
-            save = itemView.findViewById(R.id.bookmark);
-            discription = itemView.findViewById(R.id.description);
-            title = itemView.findViewById(R.id.title);
-            comments = itemView.findViewById(R.id.comments);
+            save = itemView.findViewById(R.id.save);
+
             username = itemView.findViewById(R.id.username);
+            likes = itemView.findViewById(R.id.likes);
+            publisher = itemView.findViewById(R.id.publisher);
             email = itemView.findViewById(R.id.email);
+
+            description = itemView.findViewById(R.id.description);
+            title = itemView.findViewById(R.id.title);
+            location = itemView.findViewById(R.id.location);
+            comments = itemView.findViewById(R.id.comments);
         }
     }
 

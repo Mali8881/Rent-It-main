@@ -1,118 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#121212"
+    android:background="#12122B"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <!-- Изображение -->
         <ImageView
             android:id="@+id/details_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:background="#2A2A2A"
+            android:layout_marginBottom="12dp" />
 
+        <!-- Название -->
         <TextView
             android:id="@+id/details_title"
-            android:text="Название"
-            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Название жилья"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#FFFFFF" />
+
+        <!-- Цена -->
+        <TextView
+            android:id="@+id/details_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Цена: $1500"
+            android:textColor="#A3D3FF"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Локация -->
+        <TextView
+            android:id="@+id/details_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Локация: Бишкек"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Автор -->
+        <TextView
+            android:id="@+id/details_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Автор: user@gmail.com"
+            android:textColor="#777777"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Блок: описание -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Описание"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/details_description"
-            android:text="Описание"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Описание жилья..."
             android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Блок: удобства -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:text="Удобства"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/details_price"
-            android:text="Цена"
-            android:textColor="#B66DF3"
+            android:id="@+id/details_amenities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/details_location"
-            android:text="Локация"
+            android:text="Wi-Fi, TV, Parking"
             android:textColor="#CCCCCC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
 
+        <!-- Блок: характеристики -->
         <TextView
-            android:id="@+id/details_author"
-            android:text="Автор"
-            android:textColor="#AAAAAA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:text="Характеристики"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/details_bedrooms"
             android:text="Спальни: 2"
             android:textColor="#CCCCCC"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/details_bathrooms"
             android:text="Ванные комнаты: 1"
             android:textColor="#CCCCCC"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/details_area"
             android:text="Площадь: 45 м²"
             android:textColor="#CCCCCC"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/details_type"
             android:text="Тип: Квартира"
             android:textColor="#CCCCCC"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
-
-        <TextView
-            android:id="@+id/details_amenities"
-            android:text="Удобства: Wi-Fi, Парковка"
-            android:textColor="#CCCCCC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/details_rating"
-            android:text="Рейтинг: 4.5"
+            android:text="Рейтинг: 4.5 ★"
             android:textColor="#FFD700"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
 
+        <!-- Кнопка -->
         <Button
             android:id="@+id/details_btn_book"
-            android:text="Забронировать"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:text="Забронировать"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/book_button_bg"
             android:layout_marginTop="24dp"
-            android:backgroundTint="#4A90E2"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginBottom="16dp" />
     </LinearLayout>
 </ScrollView>

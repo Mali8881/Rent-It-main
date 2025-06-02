@@ -72,7 +72,13 @@ public class PostActivity extends AppCompatActivity {
             startActivity(new Intent(PostActivity.this, MainActivity.class));
             finish();
         });
-        post.setOnClickListener(v -> uploadImage());
+        post.setOnClickListener(v -> {
+            if (imageUrl == null) {
+                Toast.makeText(this, "Выберите изображение", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadImage();
+            }
+        });
     }
 
     private void openImagePicker() {
@@ -91,31 +97,30 @@ public class PostActivity extends AppCompatActivity {
     private void uploadImage() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Публикация...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
-        if (imageUrl != null) {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUrl));
-            uploadTask = fileReference.putFile(imageUrl);
+        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUrl));
+        uploadTask = fileReference.putFile(imageUrl);
 
-            uploadTask.continueWithTask(task -> {
-                if (!task.isSuccessful()) throw task.getException();
-                return fileReference.getDownloadUrl();
-            }).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    myUrl = task.getResult().toString();
+        uploadTask.continueWithTask(task -> {
+            if (!task.isSuccessful()) throw task.getException();
+            return fileReference.getDownloadUrl();
+        }).addOnCompleteListener(task -> {
+            progressDialog.dismiss();
+            if (task.isSuccessful() && task.getResult() != null) {
+                myUrl = task.getResult().toString();
+                if (myUrl != null && !myUrl.isEmpty() && myUrl.startsWith("http")) {
                     savePostToDatabase();
-                    progressDialog.dismiss();
                     startActivity(new Intent(PostActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(PostActivity.this, "Не удалось загрузить", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    Toast.makeText(PostActivity.this, "Ошибка загрузки картинки!", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else {
-            Toast.makeText(this, "Выберите изображение", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }
+            } else {
+                Toast.makeText(PostActivity.this, "Не удалось загрузить", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void savePostToDatabase() {
@@ -155,7 +160,11 @@ public class PostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUrl = data.getData();
-            Glide.with(this).load(imageUrl).into(image_added);
+            // Отображаем картинку с плейсхолдером, если ошибка
+            Glide.with(this)
+                    .load(imageUrl)
+                    .error(R.drawable.ic_placeholder) // Добавь этот drawable в res/drawable
+                    .into(image_added);
         }
     }
 }

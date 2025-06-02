@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_favorites"
+        android:title="лайк"
+        android:icon="@drawable/ic_favorite"
+        android:showAsAction="always" />
+</menu>

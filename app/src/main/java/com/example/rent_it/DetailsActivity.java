@@ -13,66 +13,48 @@ import com.bumptech.glide.Glide;
 public class DetailsActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    private TextView tvTitle, tvDescription, tvPrice, tvLocation, tvAuthor;
-    private TextView tvBedrooms, tvBathrooms, tvArea, tvType, tvAmenities, tvRating;
+    private TextView title, description, price, location, author,
+            bedrooms, bathrooms, area, type, amenities, rating;
     private Button btnBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_details); // Твой XML с id
 
+        // init views
         imageView = findViewById(R.id.details_image);
-        tvTitle = findViewById(R.id.details_title);
-        tvDescription = findViewById(R.id.details_description);
-        tvPrice = findViewById(R.id.details_price);
-        tvLocation = findViewById(R.id.details_location);
-        tvAuthor = findViewById(R.id.details_author);
+        title = findViewById(R.id.details_title);
+        description = findViewById(R.id.details_description);
+        price = findViewById(R.id.details_price);
+        location = findViewById(R.id.details_location);
+        author = findViewById(R.id.details_author);
+        bedrooms = findViewById(R.id.details_bedrooms);
+        bathrooms = findViewById(R.id.details_bathrooms);
+        area = findViewById(R.id.details_area);
+        type = findViewById(R.id.details_type);
+        amenities = findViewById(R.id.details_amenities);
+        rating = findViewById(R.id.details_rating);
         btnBook = findViewById(R.id.details_btn_book);
 
-        tvBedrooms = findViewById(R.id.details_bedrooms);
-        tvBathrooms = findViewById(R.id.details_bathrooms);
-        tvArea = findViewById(R.id.details_area);
-        tvType = findViewById(R.id.details_type);
-        tvAmenities = findViewById(R.id.details_amenities);
-        tvRating = findViewById(R.id.details_rating);
-
-        // Получаем данные из интента
+        // get data from intent
         Intent intent = getIntent();
-        String image = intent.getStringExtra("image");
-        String title = intent.getStringExtra("title");
-        String description = intent.getStringExtra("description");
-        String price = intent.getStringExtra("price");
-        String location = intent.getStringExtra("location");
-        String author = intent.getStringExtra("author");
-        String postId = intent.getStringExtra("postId");
-        String bedrooms = intent.getStringExtra("bedrooms");
-        String bathrooms = intent.getStringExtra("bathrooms");
-        String area = intent.getStringExtra("area");
-        String type = intent.getStringExtra("type");
-        String amenities = intent.getStringExtra("amenities");
-        String rating = intent.getStringExtra("rating");
+        title.setText(intent.getStringExtra("title"));
+        description.setText(intent.getStringExtra("description"));
+        price.setText("Цена: " + intent.getStringExtra("price"));
+        location.setText("Локация: " + intent.getStringExtra("location"));
+        author.setText("Автор: " + intent.getStringExtra("author"));
+        bedrooms.setText("Спальни: " + intent.getStringExtra("bedrooms"));
+        bathrooms.setText("Ванные комнаты: " + intent.getStringExtra("bathrooms"));
+        area.setText("Площадь: " + intent.getStringExtra("area") + " м²");
+        type.setText("Тип: " + intent.getStringExtra("type"));
+        amenities.setText("Удобства: " + intent.getStringExtra("amenities"));
+        rating.setText("Рейтинг: " + intent.getStringExtra("rating"));
 
-        // Установка значений
-        Glide.with(this).load(image).into(imageView);
-        tvTitle.setText(title != null ? title : "Нет заголовка");
-        tvDescription.setText(description != null ? description : "Нет описания");
-        tvPrice.setText("Цена: " + (price != null ? price : "-") + " сом");
-        tvLocation.setText("Локация: " + (location != null ? location : "-"));
-        tvAuthor.setText("Автор: " + (author != null ? author : "-"));
-
-        tvBedrooms.setText("Спальни: " + (bedrooms != null ? bedrooms : "-"));
-        tvBathrooms.setText("Ванные комнаты: " + (bathrooms != null ? bathrooms : "-"));
-        tvArea.setText("Площадь: " + (area != null ? area : "-") + " м²");
-        tvType.setText("Тип: " + (type != null ? type : "-"));
-        tvAmenities.setText("Удобства: " + (amenities != null ? amenities : "-"));
-        tvRating.setText("Рейтинг: " + (rating != null ? rating : "-"));
-
-        // Переход на бронирование
-        btnBook.setOnClickListener(v -> {
-            Intent i = new Intent(DetailsActivity.this, BookingActivity.class);
-            i.putExtra("postId", postId);
-            startActivity(i);
-        });
+        Glide.with(this)
+                .load(intent.getStringExtra("image"))
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(imageView);
     }
 }
+

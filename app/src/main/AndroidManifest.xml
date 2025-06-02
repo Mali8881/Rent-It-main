@@ -23,6 +23,8 @@
             android:exported="false" />
         <activity android:name=".MyBookingsActivity"/>
         <activity android:name=".DetailsActivity" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".AdminActivity" />
 
         <activity
             android:name=".PostActivity"

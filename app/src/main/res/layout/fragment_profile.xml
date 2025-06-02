@@ -46,6 +46,18 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/favorites_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Избранное ❤"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_button"
+            android:gravity="center"
+            android:padding="12dp"
+            android:layout_marginTop="16dp"/>
+
 
     </LinearLayout>
 </ScrollView>
