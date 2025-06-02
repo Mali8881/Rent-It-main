@@ -1,63 +1,249 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    android:padding="24dp">
+    android:background="#151A35">
 
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
 
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_person"
-            android:background="@drawable/circle_background"
-            android:padding="10dp"
-            android:scaleType="centerCrop" />
+        <!-- Glow-аватарка -->
+        <FrameLayout
+            android:layout_width="132dp"
+            android:layout_height="132dp">
 
+            <View
+                android:layout_width="132dp"
+                android:layout_height="132dp"
+                android:background="@drawable/bg_avatar_glow" />
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person"
+                android:background="@drawable/bg_avatar_circle"
+                android:scaleType="centerCrop"/>
+        </FrameLayout>
+
+        <!-- Имя пользователя -->
         <TextView
             android:id="@+id/username"
-            android:text="Имя пользователя"
+            android:text="Балнур Байзакова"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <!-- Email -->
         <TextView
             android:id="@+id/email"
-            android:text="user@example.com"
-            android:textColor="#AAAAAA"
-            android:layout_marginTop="8dp"
+            android:text="user@email.com"
+            android:textColor="#AAB2C8"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <!-- Статус/подпись -->
         <TextView
             android:id="@+id/bio"
-            android:text="Биография будет отображаться здесь"
-            android:textColor="#CCCCCC"
-            android:layout_marginTop="16dp"
+            android:text="В поиске идеального жилья"
+            android:textColor="#4B71D1"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/favorites_button"
+
+        <!-- Рейтинг и бейдж -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_star"
+                />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.9"
+                android:textColor="#FFD600"
+                android:textSize="15sp"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Superhost"
+                android:textColor="#4B71D1"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <!-- Быстрые кнопки-плитки -->
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Избранное ❤"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/rounded_button"
+            android:rowCount="2"
+            android:columnCount="2"
+            android:layout_marginTop="32dp"
+            android:alignmentMode="alignMargins"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="true">
+
+            <LinearLayout
+                android:id="@+id/tile_booking"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:background="@drawable/card_tile_dark"
+                android:gravity="center"
+                android:layout_row="0"
+                android:layout_column="0">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_history"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Бронирования"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tile_favorite"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:background="@drawable/card_tile_dark"
+                android:gravity="center"
+                android:layout_row="0"
+                android:layout_column="1">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_favorite"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Избранное"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tile_myposts"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:background="@drawable/card_tile_dark"
+                android:gravity="center"
+                android:layout_row="1"
+                android:layout_column="0">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_home"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Мои объявления"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tile_settings"
+                android:layout_width="0dp"
+                android:layout_height="96dp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:background="@drawable/card_tile_dark"
+                android:gravity="center"
+                android:layout_row="1"
+                android:layout_column="1">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_settings"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Настройки"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- Кнопка Выйти -->
+        <ImageButton
+            android:id="@+id/btn_logout"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_btn_circle"
+            android:src="@drawable/ic_logout"
+            android:layout_marginTop="36dp"
+            android:layout_gravity="center"
+            android:contentDescription="Выйти"/>
+
+        <!-- Логотип и слоган -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:padding="12dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="24dp">
 
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_key"
+                android:layout_gravity="center"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rent-It"
+                android:textColor="#4B71D1"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

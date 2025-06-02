@@ -18,7 +18,7 @@
         android:paddingBottom="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_bookings"
+        android:id="@+id/rvBookings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

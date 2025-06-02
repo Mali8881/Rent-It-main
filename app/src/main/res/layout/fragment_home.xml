@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#151A35">
 
-    <!-- Заголовок и фильтр -->
+    <!-- Верхняя панель: заголовок + фильтр -->
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
@@ -30,7 +30,10 @@
             android:id="@+id/ivFilter"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_filter" />
+            android:src="@drawable/ic_filter"
+            android:contentDescription="Фильтр"
+            android:clickable="true"
+            android:focusable="true"/>
     </LinearLayout>
 
     <!-- Поиск -->
@@ -51,46 +54,23 @@
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/ic_search"
+            android:contentDescription="Поиск" />
 
         <EditText
-            android:id="@+id/etSearch"
+            android:id="@+id/editText_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Search"
+            android:hint="Поиск по названию или городу"
             android:textColor="#FFFFFF"
             android:textColorHint="#7B849B"
             android:paddingStart="12dp"
             android:textSize="16sp"/>
     </LinearLayout>
-    <!-- Spinner фильтрации -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinner_type"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_heating"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_wifi"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <!-- Карточка "My Bookings" -->
+    <!-- Карточка My Bookings -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_my_bookings"
         android:layout_width="match_parent"
@@ -127,18 +107,18 @@
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
-            <!-- Можно добавить стрелку или количество -->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- RecyclerView с объявлениями -->
+    <!-- Фильтры (вызываются по клику на фильтр-иконку, могут быть как BottomSheetDialogFragment) -->
+    <!-- Можно сделать отдельным layout/filter_sheet.xml, а сюда не добавлять -->
+
+    <!-- Список объявлений -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/card_my_bookings"
         android:layout_marginTop="18dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:paddingBottom="8dp"/>
 </RelativeLayout>

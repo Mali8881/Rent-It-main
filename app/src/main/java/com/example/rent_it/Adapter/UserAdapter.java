@@ -45,10 +45,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             username=itemView.findViewById(R.id.username);
-            fullname=itemView.findViewById(R.id.fullname);
+            //fullname=itemView.findViewById(R.id.fullname);
             email=itemView.findViewById(R.id.email);
-            image_profile=itemView.findViewById(R.id.image_profile);
-            btn_follow=itemView.findViewById(R.id.follow);
+            ///image_profile=itemView.findViewById(R.id.image_profile);
+            ///btn_follow=itemView.findViewById(R.id.follow);
         }
     }
     @NonNull

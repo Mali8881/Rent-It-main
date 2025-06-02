@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.drawable.Drawable;
 
@@ -13,63 +15,79 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.rent_it.BookingsActivity;
 import com.example.rent_it.FavoritesActivity;
+import com.example.rent_it.LoginActivity;
 import com.example.rent_it.Model.User;
+import com.example.rent_it.MyBookingsActivity;
 import com.example.rent_it.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 public class ProfileFragment extends Fragment {
-
+    // Объяви все нужные View
     private ImageView profileImage;
-    private TextView username, email, bio, favoritesButton;
-
-    private FirebaseUser firebaseUser;
-    private DatabaseReference reference;
+    private TextView username, email, bio, rating, badge;
+    private LinearLayout bookingTile, favoriteTile, myPostsTile, settingsTile;
+    private ImageButton btnLogout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        profileImage = view.findViewById(R.id.profile_image);
-        username = view.findViewById(R.id.username);
-        email = view.findViewById(R.id.email);
-        bio = view.findViewById(R.id.bio);
-        favoritesButton = view.findViewById(R.id.favorites_button);
+        // Найди View по id
+        profileImage = v.findViewById(R.id.profile_image);
+        username = v.findViewById(R.id.username);
+        email = v.findViewById(R.id.email);
+        bio = v.findViewById(R.id.bio);
+        rating = v.findViewById(R.id.rating);
+        badge = v.findViewById(R.id.badge);
+        btnLogout = v.findViewById(R.id.btn_logout);
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        // Для плиток — если у тебя GridLayout с LinearLayout внутри, назначь id этим LinearLayout и найди их
+        bookingTile = v.findViewById(R.id.tile_booking);      // Присвой эти id в xml плиткам!
+        favoriteTile = v.findViewById(R.id.tile_favorite);
+        myPostsTile = v.findViewById(R.id.tile_myposts);
+        settingsTile = v.findViewById(R.id.tile_settings);
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) return;
+        // Установи тестовые данные (или получи из Firebase)
+        username.setText("Балнур Байзакова");
+        email.setText("balnur@email.com");
+        bio.setText("В поиске идеального жилья");
+        rating.setText("4.9");
+        badge.setText("• Superhost");
 
-                User user = snapshot.getValue(User.class);
-                if (user == null) return;
+        // Картинку профиля (если у тебя url из Firebase) — используй Glide/Picasso
+        // Glide.with(this).load(imageUrl).into(profileImage);
 
-                username.setText(user.getUserName());
-                email.setText(user.getEmail());
-                bio.setText(user.getBio());
-
-                Glide.with(requireContext())
-                        .load(user.getImageUrl())
-                        .placeholder(R.drawable.ic_person)
-                        .error(R.drawable.ic_person)
-                        .into(profileImage);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+        // Логика кликов:
+        bookingTile.setOnClickListener(v1 -> {
+            // Открыть историю бронирований
+            startActivity(new Intent(getContext(), MyBookingsActivity.class));
         });
 
-        // ⬇⬇⬇ Добавь сюда обработку нажатия
-        favoritesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), FavoritesActivity.class);
-            startActivity(intent);
+        favoriteTile.setOnClickListener(v1 -> {
+            // Открыть избранное
+            startActivity(new Intent(getContext(), FavoritesActivity.class));
         });
 
-        return view;
+        myPostsTile.setOnClickListener(v1 -> {
+            // Открыть мои объявления
+            startActivity(new Intent(getContext(), BookingsActivity.class));
+        });
+
+        settingsTile.setOnClickListener(v1 -> {
+            // Открыть настройки
+            startActivity(new Intent(getContext(), SettingsActivity.class));
+        });
+
+        btnLogout.setOnClickListener(v1 -> {
+            // Выйти из аккаунта (например, FirebaseAuth)
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getContext(), LoginActivity.class));
+            getActivity().finish();
+        });
+
+        return v;
     }
 }

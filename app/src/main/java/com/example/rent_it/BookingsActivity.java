@@ -33,7 +33,7 @@ public class BookingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
 
-        recyclerView = findViewById(R.id.recycler_bookings);
+        recyclerView = findViewById(R.id.rvBookings);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         bookingList = new ArrayList<>();

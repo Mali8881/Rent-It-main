@@ -1,41 +1,50 @@
 <resources>
-    <string-array name="property_types">
-        <item>Квартира</item>
-        <item>Дом</item>
-        <item>Комната</item>
-        <item>Офис</item>
-    </string-array>
-
-    <string-array name="building_types">
-        <item>Многоэтажка</item>
-        <item>Частный дом</item>
-        <item>Бизнес-центр</item>
-        <item>Гостиница</item>
-    </string-array>
-
-    <string-array name="heating_types">
-        <item>Центральное</item>
-        <item>Индивидуальное</item>
-        <item>Без отопления</item>
-    </string-array>
-
-    <string-array name="wifi_options">
-        <item>Да</item>
-        <item>Нет</item>
-    </string-array>
-
+    <!-- Тип жилья -->
     <string-array name="type_options">
         <item>Все</item>
         <item>Квартира</item>
         <item>Дом</item>
         <item>Комната</item>
-        <item>Офис</item>
+        <item>Студия</item>
     </string-array>
 
+    <!-- Количество комнат -->
+    <string-array name="rooms_options">
+        <item>Все</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4+</item>
+    </string-array>
+
+    <!-- Отопление -->
     <string-array name="heating_options">
         <item>Все</item>
+        <item>Газовое</item>
+        <item>Электрическое</item>
         <item>Центральное</item>
-        <item>Индивидуальное</item>
-        <item>Без отопления</item>
+        <item>Печное</item>
+        <item>Другое</item>
+    </string-array>
+
+    <!-- Примеры других, если нужны -->
+    <string-array name="building_types">
+        <item>Многоквартирный дом</item>
+        <item>Частный дом</item>
+        <item>Общежитие</item>
+        <item>Таунхаус</item>
+        <item>Другое</item>
+    </string-array>
+    <string-array name="wifi_options">
+        <item>Есть</item>
+        <item>Нет</item>
+    </string-array>
+    <string-array name="heating_types">
+        <item>Нет</item>
+        <item>Газовое</item>
+        <item>Электрическое</item>
+        <item>Центральное</item>
+        <item>Печное</item>
+        <item>Другое</item>
     </string-array>
 </resources>

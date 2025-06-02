@@ -91,7 +91,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_like"
-                    android:tint="#BBBBBB" />
+                  />
 
                 <TextView
                     android:id="@+id/likes"
@@ -108,7 +108,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/ic_save"
-                    android:tint="#BBBBBB" />
+                     />
 
                 <ImageView
                     android:id="@+id/comment"
@@ -116,9 +116,28 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/ic_comment"
-                    android:tint="#BBBBBB" />
+                    />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <!-- Горизонтальный список фото -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
+
+            <!-- Остальной контент карточки -->
+        </LinearLayout>
             <!-- Метаданные -->
             <TextView
                 android:id="@+id/publisher"

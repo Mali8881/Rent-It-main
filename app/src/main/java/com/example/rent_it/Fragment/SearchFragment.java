@@ -40,11 +40,11 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_search, container, false);
-        recyclerView=view.findViewById(R.id.recycler_view);
+        //recyclerView=view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        search_bar=view.findViewById(R.id.search_bar);
+        ///search_bar=view.findViewById(R.id.search_bar);
         mUser=new ArrayList<>();
         userAdapter=new UserAdapter(getContext(),mUser);
         recyclerView.setAdapter(userAdapter);
