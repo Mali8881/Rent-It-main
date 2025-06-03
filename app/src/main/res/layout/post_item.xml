@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     card_view:cardCornerRadius="16dp"
-    card_view:cardElevation="8dp"
+    card_view:cardElevation="6dp"
     card_view:cardBackgroundColor="#1D1D40">
 
     <LinearLayout
@@ -13,51 +13,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Изображение поста -->
-        <FrameLayout
+        <!-- Большое изображение поста -->
+        <ImageView
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Post Image"
+            android:background="#2B2B2B" />
 
-            <ImageView
-                android:id="@+id/post_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:background="#2B2B2B"
-                android:contentDescription="Post Image" />
+        <!-- Цена поверх изображения -->
+        <TextView
+            android:id="@+id/price_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$1.5K"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/price_background"
+            android:textColor="@android:color/white"
+            android:padding="6dp"
+            android:layout_margin="12dp"
+            android:elevation="4dp"
+            android:layout_gravity="top|start" />
 
-            <!-- Цена поверх изображения -->
-            <TextView
-                android:id="@+id/price_overlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$1.5K"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:background="@drawable/price_background"
-                android:textColor="@android:color/white"
-                android:padding="6dp"
-                android:layout_margin="12dp"
-                android:elevation="4dp"
-                android:layout_gravity="top|start" />
-        </FrameLayout>
-
-        <!-- Контейнер для текста -->
+        <!-- Контейнер текста -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Описание жилья"
-                android:textColor="#CCCCCC"
-                android:textSize="14sp"
-                android:maxLines="2"
-                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/title"
@@ -66,8 +51,7 @@
                 android:text="Modern Apartment"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/location"
@@ -77,6 +61,17 @@
                 android:textColor="#AAAAAA"
                 android:textSize="13sp"
                 android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Краткое описание жилья"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginTop="4dp" />
 
             <!-- Иконки действий -->
             <LinearLayout
@@ -90,8 +85,7 @@
                     android:id="@+id/like"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_like"
-                  />
+                    android:src="@drawable/ic_like" />
 
                 <TextView
                     android:id="@+id/likes"
@@ -107,63 +101,17 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_save"
-                     />
+                    android:src="@drawable/ic_save" />
 
                 <ImageView
                     android:id="@+id/comment"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_comment"
-                    />
+                    android:src="@drawable/ic_comment" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-            <!-- Горизонтальный список фото -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_images"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:orientation="horizontal"
-                android:overScrollMode="never"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"/>
-
-            <!-- Остальной контент карточки -->
-        </LinearLayout>
-            <!-- Метаданные -->
-            <TextView
-                android:id="@+id/publisher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Publisher"
-                android:textColor="#888888"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="#888888"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="#888888"
-                android:textSize="12sp" />
-
+            <!-- Эти элементы будут скрыты -->
             <TextView
                 android:id="@+id/comments"
                 android:layout_width="wrap_content"
@@ -171,18 +119,54 @@
                 android:text="View all 0 comments"
                 android:textColor="#AAAAAA"
                 android:textSize="12sp"
-                android:layout_marginTop="4dp" />
+                android:visibility="gone" />
 
-            <!-- Картинка профиля -->
+            <TextView
+                android:id="@+id/publisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Publisher"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/image_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="12dp"
                 android:src="@drawable/ic_profile"
-                android:contentDescription="Profile"
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
-                android:background="@drawable/profile_background" />
+                android:background="@drawable/profile_background"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#12122B"
+    android:background="#121212"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/rounded_bg_dark"
+        android:padding="16dp">
 
         <!-- Изображение -->
         <ImageView
@@ -16,143 +18,138 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="centerCrop"
-            android:background="#2A2A2A"
-            android:layout_marginBottom="12dp" />
+            android:background="@drawable/rounded_image_bg"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Название -->
+        <!-- Название и цена -->
         <TextView
             android:id="@+id/details_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Название жилья"
-            android:textSize="22sp"
+            android:text="Уютная квартира в центре"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF" />
 
-        <!-- Цена -->
         <TextView
             android:id="@+id/details_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Цена: $1500"
-            android:textColor="#A3D3FF"
-            android:textSize="18sp"
+            android:text="₽ 1 500 в месяц"
+            android:textColor="#4A90E2"
+            android:textSize="16sp"
             android:layout_marginTop="4dp" />
 
-        <!-- Локация -->
+        <!-- Локация и автор -->
         <TextView
             android:id="@+id/details_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Локация: Бишкек"
+            android:text="📍 Бишкек"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Автор -->
         <TextView
             android:id="@+id/details_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Автор: user@gmail.com"
+            android:text="👤 user@gmail.com"
             android:textColor="#777777"
             android:textSize="13sp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
 
-        <!-- Блок: описание -->
+        <!-- Описание -->
         <TextView
+            android:text="Описание"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Описание"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
             android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Описание жилья..."
-            android:textColor="#CCCCCC"
+            android:text="Современная светлая квартира, полностью меблирована. Идеально подходит для пар или студентов."
+            android:textColor="#DDDDDD"
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
-        <!-- Блок: удобства -->
+        <!-- Удобства -->
         <TextView
+            android:text="Удобства"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Удобства"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
             android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/details_amenities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wi-Fi, TV, Parking"
+            android:text="📶 Wi-Fi, 📺 TV, 🚗 Парковка"
             android:textColor="#CCCCCC"
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
-        <!-- Блок: характеристики -->
+        <!-- Характеристики -->
         <TextView
+            android:text="Характеристики"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Характеристики"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
             android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/details_bedrooms"
-            android:text="Спальни: 2"
-            android:textColor="#CCCCCC"
-            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="🛏 Спальни: 2"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/details_bathrooms"
-            android:text="Ванные комнаты: 1"
-            android:textColor="#CCCCCC"
-            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/details_area"
-            android:text="Площадь: 45 м²"
+            android:text="🛁 Ванные: 1"
             android:textColor="#CCCCCC"
             android:textSize="14sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
 
         <TextView
-            android:id="@+id/details_type"
-            android:text="Тип: Квартира"
+            android:id="@+id/details_area" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📐 Площадь: 45 м²"
             android:textColor="#CCCCCC"
             android:textSize="14sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
 
         <TextView
-            android:id="@+id/details_rating"
-            android:text="Рейтинг: 4.5 ★"
+            android:id="@+id/details_type" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏠 Тип: Квартира"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/details_rating" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⭐ Рейтинг: 4.5 / 5"
             android:textColor="#FFD700"
             android:textSize="14sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="4dp" />
 
-        <!-- Кнопка -->
+        <!-- Кнопка бронирования -->
         <Button
             android:id="@+id/details_btn_book"
             android:layout_width="match_parent"
@@ -161,8 +158,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
-            android:background="@drawable/book_button_bg"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp" />
+            android:background="@drawable/bg_button_blue"
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>

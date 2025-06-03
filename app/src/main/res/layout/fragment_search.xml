@@ -1,37 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#151A35"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- Поле поиска -->
+    <!-- 🔍 Поиск -->
     <EditText
         android:id="@+id/search_bar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Поиск пользователей..."
+        android:hint="Поиск пользователей или жилья..."
         android:padding="12dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:background="@drawable/edit_text_bg" />
 
+    <!-- ⚙️ ФИЛЬТРЫ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        android:background="#1A1F3B">
 
-    <!-- Список пользователей -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/autoComplete_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Город или район"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:background="@drawable/edit_text_bg" />
+
+            <Spinner
+                android:id="@+id/spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <Spinner
+                android:id="@+id/spinner_rooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <!-- Цена -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <EditText
+                    android:id="@+id/editText_price_min"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Цена от"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_bg"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#AAAAAA" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="0dp" />
+
+                <EditText
+                    android:id="@+id/editText_price_max"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="до"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_bg"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#AAAAAA" />
+            </LinearLayout>
+
+            <!-- Площадь -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <EditText
+                    android:id="@+id/editText_area_min"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Площадь от"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_bg"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#AAAAAA" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="0dp" />
+
+                <EditText
+                    android:id="@+id/editText_area_max"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="до"
+                    android:inputType="number"
+                    android:background="@drawable/edit_text_bg"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#AAAAAA" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spinner_heating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wi-Fi:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/switch_wifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_apply_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Применить"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#4A90E2"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 📋 Список объявлений -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
         android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:paddingTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/search_bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+</LinearLayout>

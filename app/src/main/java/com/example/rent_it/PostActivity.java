@@ -5,7 +5,10 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -60,6 +63,9 @@ public class PostActivity extends AppCompatActivity {
         spinnerHeating = findViewById(R.id.spinner_heating);
         spinnerWifi = findViewById(R.id.spinner_wifi);
 
+        // Настройка спиннеров
+        setupSpinners();
+
         // Инициализация кнопок
         image_added = findViewById(R.id.image_added);
         close = findViewById(R.id.close);
@@ -79,6 +85,36 @@ public class PostActivity extends AppCompatActivity {
                 uploadImage();
             }
         });
+    }
+
+    private void setupSpinners() {
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Квартира", "Дом", "Офис", "Отель", "Комната", "Гостинка", "Другое"}
+        );
+        spinnerType.setAdapter(typeAdapter);
+
+        ArrayAdapter<String> buildingAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Многоэтажка", "Частный дом", "Бизнес-центр", "Гостиница", "Другое"}
+        );
+        spinnerBuildingType.setAdapter(buildingAdapter);
+
+        ArrayAdapter<String> heatingAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Центральное", "Газовое", "Электрическое", "Без отопления"}
+        );
+        spinnerHeating.setAdapter(heatingAdapter);
+
+        ArrayAdapter<String> wifiAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Есть", "Нет"}
+        );
+        spinnerWifi.setAdapter(wifiAdapter);
     }
 
     private void openImagePicker() {
@@ -137,17 +173,12 @@ public class PostActivity extends AppCompatActivity {
         hashMap.put("email", userEmail);
         hashMap.put("price", etPrice.getText().toString());
         hashMap.put("location", etLocation.getText().toString());
-// Защита от NullPointer
-        Object typeItem = spinnerType.getSelectedItem();
-        Object buildingTypeItem = spinnerBuildingType.getSelectedItem();
-        Object heatingItem = spinnerHeating.getSelectedItem();
-        Object wifiItem = spinnerWifi.getSelectedItem();
 
-        hashMap.put("type", typeItem != null ? typeItem.toString() : "не указано");
-        hashMap.put("buildingType", buildingTypeItem != null ? buildingTypeItem.toString() : "не указано");
-        hashMap.put("heating", heatingItem != null ? heatingItem.toString() : "не указано");
-        hashMap.put("wifi", wifiItem != null ? wifiItem.toString() : "не указано");
-
+        // Безопасно получаем значения из спиннеров
+        hashMap.put("type", spinnerType.getSelectedItem() != null ? spinnerType.getSelectedItem().toString() : "не указано");
+        hashMap.put("buildingType", spinnerBuildingType.getSelectedItem() != null ? spinnerBuildingType.getSelectedItem().toString() : "не указано");
+        hashMap.put("heating", spinnerHeating.getSelectedItem() != null ? spinnerHeating.getSelectedItem().toString() : "не указано");
+        hashMap.put("wifi", spinnerWifi.getSelectedItem() != null ? spinnerWifi.getSelectedItem().toString() : "не указано");
 
         // Остальные поля
         hashMap.put("bedrooms", etBedrooms.getText().toString());
@@ -165,10 +196,9 @@ public class PostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUrl = data.getData();
-            // Отображаем картинку с плейсхолдером, если ошибка
             Glide.with(this)
                     .load(imageUrl)
-                    .error(R.drawable.ic_placeholder) // Добавь этот drawable в res/drawable
+                    .error(R.drawable.ic_placeholder)
                     .into(image_added);
         }
     }

@@ -1,37 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#121212"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context="com.example.rent_it.Fragment.GeminiChatFragment">
 
+    <!-- Поле для ввода сообщения -->
     <EditText
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ваше сообщение для Gemini..."
+        android:background="@drawable/rounded_input"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#888888"
         android:inputType="textMultiLine"
-        android:minLines="3"/>
+        android:minLines="3" />
 
+    <!-- Кнопка отправки -->
     <Button
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="end"
         android:layout_marginTop="8dp"
-        android:text="Отправить"/>
+        android:text="Отправить"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#4A90E2" />
 
+    <!-- Подсказки запросов -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/suggestionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="Как выбрать квартиру?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2A2A2A"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="Что спросить у арендодателя?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2A2A2A"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="Как безопасно снять жильё?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2A2A2A"
+                android:layout_marginEnd="8dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Ответ -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="16dp">
+
         <TextView
             android:id="@+id/tvResponse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ответ от Gemini появится здесь..."
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textColor="#DDDDDD"
+            android:textSize="16sp" />
     </ScrollView>
 
 </LinearLayout>

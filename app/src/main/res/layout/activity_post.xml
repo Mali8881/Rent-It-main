@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#181C24"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#181C24">
+    android:clipToPadding="false"
+    android:paddingBottom="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,7 +12,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Top bar -->
+        <!-- Верхняя панель -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +24,7 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/ic_close"
-                />
+                android:tint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,34 +36,38 @@
                 android:textStyle="bold"/>
         </LinearLayout>
 
-        <!-- Images horizontal preview (до 9) -->
+        <!-- Локация -->
         <EditText
             android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Город или адрес"
-            android:background="@drawable/edit_text_bg"
             android:textColor="#FFFFFF"
-            android:textColorHint="#7B849B"/>
+            android:textColorHint="#7B849B"
+            android:background="@drawable/edit_text_bg"
+            android:layout_marginTop="20dp" />
 
+        <!-- Превью изображений -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photos"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginTop="24dp"
-            android:clipToPadding="false"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:overScrollMode="never"
             android:paddingEnd="4dp" />
+
+        <!-- Основное изображение -->
         <ImageView
             android:id="@+id/image_added"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginTop="12dp"
             android:scaleType="centerCrop"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_placeholder" />
+            android:src="@drawable/ic_placeholder"
+            android:background="@drawable/rounded_image_bg" />
 
-
+        <!-- Кнопка добавления фото -->
         <Button
             android:id="@+id/btn_add_photo"
             android:layout_width="wrap_content"
@@ -71,31 +77,30 @@
             android:text="Добавить фото"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#4A90E2"
-            android:background="@drawable/rounded_button"/>
+            android:background="@drawable/rounded_button" />
 
-        <!-- Main fields -->
+        <!-- Основные поля -->
         <EditText
             android:id="@+id/title"
-            android:hint="Название"
-            android:textColorHint="#7B849B"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/edit_text_bg"
-            android:layout_marginTop="18dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Название"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#7B849B"
+            android:background="@drawable/edit_text_bg"
+            android:layout_marginTop="20dp" />
 
         <EditText
             android:id="@+id/description"
-            android:hint="Описание"
-            android:textColorHint="#7B849B"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/edit_text_bg"
-            android:layout_marginTop="12dp"
-            android:minLines="3"
-            android:gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Описание"
+            android:minLines="4"
+            android:gravity="top"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#7B849B"
+            android:background="@drawable/edit_text_bg"
+            android:layout_marginTop="12dp" />
 
         <!-- Цена и площадь -->
         <LinearLayout
@@ -107,26 +112,26 @@
 
             <EditText
                 android:id="@+id/price"
-                android:hint="Цена, сом"
-                android:inputType="number"
-                android:textColorHint="#7B849B"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/edit_text_bg"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp" />
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="Цена, сом"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#7B849B"
+                android:background="@drawable/edit_text_bg" />
 
             <EditText
                 android:id="@+id/area"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="Площадь, м²"
                 android:inputType="numberDecimal"
-                android:textColorHint="#7B849B"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/edit_text_bg"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:textColorHint="#7B849B"
+                android:background="@drawable/edit_text_bg" />
         </LinearLayout>
 
         <!-- Комнаты и ванные -->
@@ -139,49 +144,45 @@
 
             <EditText
                 android:id="@+id/bedrooms"
-                android:hint="Спальни"
-                android:inputType="number"
-                android:textColorHint="#7B849B"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/edit_text_bg"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp" />
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="Спальни"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#7B849B"
+                android:background="@drawable/edit_text_bg" />
 
             <EditText
                 android:id="@+id/bathrooms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="Ванные"
                 android:inputType="number"
-                android:textColorHint="#7B849B"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/edit_text_bg"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:textColorHint="#7B849B"
+                android:background="@drawable/edit_text_bg" />
         </LinearLayout>
 
-        <!-- Тип жилья, здание, отопление, wifi -->
-        <Spinner
-            android:id="@+id/spinner_type"
+        <!-- Спиннеры -->
+        <Spinner android:id="@+id/spinner_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="14dp"/>
 
-        <Spinner
-            android:id="@+id/spinner_building_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-
-        <Spinner
-            android:id="@+id/spinner_heating"
+        <Spinner android:id="@+id/spinner_building_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
 
-        <Spinner
-            android:id="@+id/spinner_wifi"
+        <Spinner android:id="@+id/spinner_heating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner android:id="@+id/spinner_wifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
@@ -189,26 +190,25 @@
         <!-- Удобства -->
         <EditText
             android:id="@+id/amenities"
-            android:hint="Удобства (Wi-Fi, Парковка...)"
-            android:textColorHint="#7B849B"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/edit_text_bg"
-            android:layout_marginTop="14dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Удобства (Wi-Fi, Парковка...)"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#7B849B"
+            android:background="@drawable/edit_text_bg"
+            android:layout_marginTop="14dp" />
 
         <!-- Кнопка -->
         <TextView
             android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
             android:text="Опубликовать"
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:backgroundTint="#4A90E2"
-            android:background="@drawable/rounded_button"
-            android:layout_marginTop="32dp"
-            android:padding="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:background="@drawable/rounded_button" />
     </LinearLayout>
 </ScrollView>

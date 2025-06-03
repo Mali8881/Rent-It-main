@@ -21,9 +21,8 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details); // Твой XML с id
+        setContentView(R.layout.activity_details);
 
-        // init views
         imageView = findViewById(R.id.details_image);
         title = findViewById(R.id.details_title);
         description = findViewById(R.id.details_description);
@@ -38,15 +37,15 @@ public class DetailsActivity extends AppCompatActivity {
         rating = findViewById(R.id.details_rating);
         btnBook = findViewById(R.id.details_btn_book);
 
-        // get data from intent
         Intent intent = getIntent();
+
         title.setText(intent.getStringExtra("title"));
         description.setText(intent.getStringExtra("description"));
         price.setText("Цена: " + intent.getStringExtra("price"));
         location.setText("Локация: " + intent.getStringExtra("location"));
         author.setText("Автор: " + intent.getStringExtra("author"));
         bedrooms.setText("Спальни: " + intent.getStringExtra("bedrooms"));
-        bathrooms.setText("Ванные комнаты: " + intent.getStringExtra("bathrooms"));
+        bathrooms.setText("Ванные: " + intent.getStringExtra("bathrooms"));
         area.setText("Площадь: " + intent.getStringExtra("area") + " м²");
         type.setText("Тип: " + intent.getStringExtra("type"));
         amenities.setText("Удобства: " + intent.getStringExtra("amenities"));
@@ -54,21 +53,18 @@ public class DetailsActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_placeholder)
                 .into(imageView);
 
         btnBook.setOnClickListener(v -> {
-            String postId = getIntent().getStringExtra("postId");
+            String postId = intent.getStringExtra("postId");
             if (postId != null && !postId.isEmpty()) {
                 Intent bookIntent = new Intent(DetailsActivity.this, BookingActivity.class);
                 bookIntent.putExtra("postId", postId);
                 startActivity(bookIntent);
             } else {
-                // если вдруг postId не передали
                 Toast.makeText(DetailsActivity.this, "Ошибка: ID жилья не найден", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
-
