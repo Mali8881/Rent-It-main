@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -48,28 +50,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Post post = mPost.get(position);
 
         try {
-            Glide.with(mContext).load(post.getImage()).into(holder.post_image);
-
-            if (post.getDescription() != null && !post.getDescription().isEmpty()) {
-                holder.description.setVisibility(View.VISIBLE);
-                holder.description.setText(post.getDescription());
-            } else {
-                holder.description.setVisibility(View.GONE);
+            List<String> images = post.getImages();
+            if (images == null || images.isEmpty()) {
+                images = new ArrayList<>();
+                if (post.getImage() != null && !post.getImage().isEmpty()) {
+                    images.add(post.getImage());
+                }
             }
+            ImageAdapter imageAdapter = new ImageAdapter(mContext, images);
+            holder.rvImages.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            holder.rvImages.setAdapter(imageAdapter);
 
-            if (post.getTitle() != null && !post.getTitle().isEmpty()) {
-                holder.title.setVisibility(View.VISIBLE);
-                holder.title.setText(post.getTitle());
-            } else {
-                holder.title.setVisibility(View.GONE);
-            }
-
-            if (post.getEmail() != null && !post.getEmail().isEmpty()) {
-                holder.email.setVisibility(View.VISIBLE);
-                holder.email.setText(post.getEmail());
-            } else {
-                holder.email.setVisibility(View.GONE);
-            }
+            holder.description.setText(post.getDescription());
+            holder.title.setText(post.getTitle());
+            holder.email.setText(post.getEmail());
 
             publisherInfo(holder.image_profile, holder.username, holder.email, holder.publisher, post.getPublisher());
             isLiked(post.getPostId(), holder.like);
@@ -77,12 +71,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             getComments(post.getPostId(), holder.comments);
 
             holder.like.setOnClickListener(v -> {
+                DatabaseReference postLikeRef = FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId());
+                DatabaseReference userLikeRef = FirebaseDatabase.getInstance().getReference().child("LikesByUser").child(firebaseUser.getUid());
+
                 if (holder.like.getTag().equals("like")) {
-                    FirebaseDatabase.getInstance().getReference().child("Likes")
-                            .child(post.getPostId()).child(firebaseUser.getUid()).setValue(true);
+                    postLikeRef.child(firebaseUser.getUid()).setValue(true);
+                    userLikeRef.child(post.getPostId()).setValue(true);
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("Likes")
-                            .child(post.getPostId()).child(firebaseUser.getUid()).removeValue();
+                    postLikeRef.child(firebaseUser.getUid()).removeValue();
+                    userLikeRef.child(post.getPostId()).removeValue();
                 }
             });
 
@@ -97,7 +94,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             holder.comment.setOnClickListener(commentsClickListener);
 
             holder.itemView.setOnClickListener(v -> {
-                Log.d("POST_CLICK", "Нажатие на пост: " + post.getTitle());
                 Intent intent = new Intent(mContext, DetailsActivity.class);
                 intent.putExtra("postId", post.getPostId());
                 intent.putExtra("title", post.getTitle());
@@ -105,7 +101,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 intent.putExtra("price", post.getPrice());
                 intent.putExtra("location", post.getLocation());
                 intent.putExtra("author", post.getEmail());
-                intent.putExtra("image", post.getImage());
                 intent.putExtra("bedrooms", post.getBedrooms());
                 intent.putExtra("bathrooms", post.getBathrooms());
                 intent.putExtra("area", post.getArea());
@@ -125,23 +120,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return mPost.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image_profile, post_image, like, comment, save;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView image_profile, like, comment, save;
         public TextView username, likes, publisher, description, comments, title, email, location;
+        public RecyclerView rvImages;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image_profile = itemView.findViewById(R.id.image_profile);
-            post_image = itemView.findViewById(R.id.post_image);
+            rvImages = itemView.findViewById(R.id.rv_images);
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
             save = itemView.findViewById(R.id.save);
-
             username = itemView.findViewById(R.id.username);
             likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
             email = itemView.findViewById(R.id.email);
-
             description = itemView.findViewById(R.id.description);
             title = itemView.findViewById(R.id.title);
             location = itemView.findViewById(R.id.location);

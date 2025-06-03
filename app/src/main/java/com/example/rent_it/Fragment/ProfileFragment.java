@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,14 +18,14 @@ import com.bumptech.glide.Glide;
 import com.example.rent_it.BookingsActivity;
 import com.example.rent_it.FavoritesActivity;
 import com.example.rent_it.LoginActivity;
-import com.example.rent_it.Model.User;
 import com.example.rent_it.MyBookingsActivity;
 import com.example.rent_it.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+
 public class ProfileFragment extends Fragment {
-    // Объяви все нужные View
+
     private ImageView profileImage;
     private TextView username, email, bio, rating, badge;
     private LinearLayout bookingTile, favoriteTile, myPostsTile, settingsTile;
@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Найди View по id
+        // Найти View
         profileImage = v.findViewById(R.id.profile_image);
         username = v.findViewById(R.id.username);
         email = v.findViewById(R.id.email);
@@ -44,48 +44,72 @@ public class ProfileFragment extends Fragment {
         badge = v.findViewById(R.id.badge);
         btnLogout = v.findViewById(R.id.btn_logout);
 
-        // Для плиток — если у тебя GridLayout с LinearLayout внутри, назначь id этим LinearLayout и найди их
-        bookingTile = v.findViewById(R.id.tile_booking);      // Присвой эти id в xml плиткам!
+        bookingTile = v.findViewById(R.id.tile_booking);
         favoriteTile = v.findViewById(R.id.tile_favorite);
         myPostsTile = v.findViewById(R.id.tile_myposts);
         settingsTile = v.findViewById(R.id.tile_settings);
 
-        // Установи тестовые данные (или получи из Firebase)
-        username.setText("Балнур Байзакова");
-        email.setText("balnur@email.com");
-        bio.setText("В поиске идеального жилья");
-        rating.setText("4.9");
-        badge.setText("• Superhost");
+        // Загрузка данных из Firebase
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            DatabaseReference reference = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(firebaseUser.getUid());
 
-        // Картинку профиля (если у тебя url из Firebase) — используй Glide/Picasso
-        // Glide.with(this).load(imageUrl).into(profileImage);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("username").getValue(String.class);
+                        String emailStr = snapshot.child("email").getValue(String.class);
+                        String bioStr = snapshot.child("bio").getValue(String.class);
+                        String ratingStr = snapshot.child("rating").getValue(String.class);
+                        String badgeStr = snapshot.child("badge").getValue(String.class);
+                        String imageUrl = snapshot.child("imageUrl").getValue(String.class);
 
-        // Логика кликов:
+                        username.setText(name != null ? name : "Без имени");
+                        email.setText(emailStr != null ? emailStr : "user@email.com");
+                        bio.setText(bioStr != null ? bioStr : "В поиске идеального жилья");
+                        rating.setText(ratingStr != null ? ratingStr : "0.0");
+                        badge.setText(badgeStr != null ? "• " + badgeStr : "");
+
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Glide.with(getContext())
+                                    .load(imageUrl)
+                                    .placeholder(R.drawable.ic_person)
+                                    .into(profileImage);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getContext(), "Ошибка загрузки профиля", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        // Обработчики кликов
         bookingTile.setOnClickListener(v1 -> {
-            // Открыть историю бронирований
             startActivity(new Intent(getContext(), MyBookingsActivity.class));
         });
 
         favoriteTile.setOnClickListener(v1 -> {
-            // Открыть избранное
             startActivity(new Intent(getContext(), FavoritesActivity.class));
         });
 
         myPostsTile.setOnClickListener(v1 -> {
-            // Открыть мои объявления
             startActivity(new Intent(getContext(), BookingsActivity.class));
         });
 
         settingsTile.setOnClickListener(v1 -> {
-            // Открыть настройки
-            startActivity(new Intent(getContext(), SettingsActivity.class));
+            Toast.makeText(getContext(), "Настройки пока не реализованы", Toast.LENGTH_SHORT).show();
         });
 
         btnLogout.setOnClickListener(v1 -> {
-            // Выйти из аккаунта (например, FirebaseAuth)
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getContext(), LoginActivity.class));
-            getActivity().finish();
+            requireActivity().finish();
         });
 
         return v;

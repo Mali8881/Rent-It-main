@@ -17,53 +17,54 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.rent_it.Adapter.PostAdapter;
+import com.example.rent_it.Model.Post;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
-    private List<Post> postList;
-    private List<String> favoriteIds;
-    private String currentUserId;
-    private TextView emptyText;
+    private List<Post> favoritePosts = new ArrayList<>();
+    private List<String> likedPostIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        recyclerView = findViewById(R.id.recycler_favorites);
-        emptyText = findViewById(R.id.emptyText);
-
+        recyclerView = findViewById(R.id.recycler_view_favorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        postList = new ArrayList<>();
-        favoriteIds = new ArrayList<>();
-        postAdapter = new PostAdapter(this, postList);
+        postAdapter = new PostAdapter(this, favoritePosts);
         recyclerView.setAdapter(postAdapter);
 
-        loadFavorites();
+        loadLikedPosts();
     }
 
-    private void loadFavorites() {
-        DatabaseReference favRef = FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child(currentUserId)
-                .child("favorites");
+    private void loadLikedPosts() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference likesRef = FirebaseDatabase.getInstance().getReference("LikesByUser").child(uid);
 
-        favRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        likesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                favoriteIds.clear();
-                postList.clear();
-
+                likedPostIds.clear();
                 for (DataSnapshot snap : snapshot.getChildren()) {
-                    String postId = snap.getValue(String.class);
-                    if (postId != null) {
-                        favoriteIds.add(postId);
-                    }
+                    likedPostIds.add(snap.getKey());
                 }
-
-                fetchPosts();
+                loadPosts();
             }
 
             @Override
@@ -71,28 +72,24 @@ public class FavoritesActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchPosts() {
-        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("Posts");
+    private void loadPosts() {
+        DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference("Posts");
 
-        for (String postId : favoriteIds) {
-            postRef.child(postId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Post post = snapshot.getValue(Post.class);
-                    if (post != null) {
-                        postList.add(post);
-                        postAdapter.notifyDataSetChanged();
-                        emptyText.setVisibility(View.GONE);
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                favoritePosts.clear();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    Post post = snap.getValue(Post.class);
+                    if (post != null && likedPostIds.contains(post.getPostId())) {
+                        favoritePosts.add(post);
                     }
                 }
+                postAdapter.notifyDataSetChanged();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
-            });
-        }
-
-        if (favoriteIds.isEmpty()) {
-            emptyText.setVisibility(View.VISIBLE);
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 }

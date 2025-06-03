@@ -10,9 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.rent_it.Fragment.GeminiChatFragment;
 import com.example.rent_it.Fragment.HomeFragment;
 import com.example.rent_it.Fragment.ProfileFragment;
-import com.example.rent_it.Fragment.SearchFragment;
 import com.example.rent_it.Model.Post;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.nav_home) {
                 selectedFragment = new HomeFragment();
             } else if (itemId == R.id.nav_search) {
-                selectedFragment = new SearchFragment();
+                selectedFragment = new GeminiChatFragment();
             } else if (itemId == R.id.nav_add) {
                 startActivity(new Intent(MainActivity.this, PostActivity.class));
                 return true;

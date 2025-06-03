@@ -1,20 +1,33 @@
 package com.example.rent_it.Model;
 
+import android.content.Context;
+
+import java.util.List;
+
 public class User {
     private  String id;
-    private  String userName;
+    private String name;
     private  String fullName;
     private String email;
     private  String imageUrl;
     private  String bio;
+    private String phone;
 
-    public User(String id, String userName, String fullName, String email, String imageUrl, String bio) {
+
+    private Context context;
+    private List<User> users;
+
+    public User(String id, String userName, String fullName, String email) {
         this.id = id;
-        this.userName = userName;
+        this.name = userName;
         this.fullName = fullName;
         this.email = email;
         this.imageUrl = imageUrl;
         this.bio = bio;
+        this.context = context;
+        this.users = users;
+        this.phone = phone;
+
     }
 
     public  User(){
@@ -46,11 +59,11 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return name;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.name = userName;
     }
 
     public String getId() {
@@ -68,4 +81,17 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getUserId() {
+        return null;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.BreakIterator;
 import java.util.Calendar;
 
 public class BookingActivity extends AppCompatActivity {
@@ -24,10 +26,15 @@ public class BookingActivity extends AppCompatActivity {
     private Button btnBook;
     private String startDate = "", endDate = "", postId = "";
 
+    EditText etMessage = findViewById(R.id.etMessage);
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
+        etMessage = findViewById(R.id.etMessage);
+
 
         tvStartDate = findViewById(R.id.tvStartDate);
         tvEndDate = findViewById(R.id.tvEndDate);
@@ -72,6 +79,7 @@ public class BookingActivity extends AppCompatActivity {
 
         String bookingId = FirebaseDatabase.getInstance().getReference("Bookings").push().getKey();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String message = etMessage.getText().toString().trim();
 
         Booking booking = new Booking(
                 bookingId,
@@ -79,8 +87,10 @@ public class BookingActivity extends AppCompatActivity {
                 userId,
                 startDate,
                 endDate,
-                "ожидание"
+                "ожидание",
+                message
         );
+
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Bookings").child(bookingId);
         ref.setValue(booking).addOnSuccessListener(unused -> {

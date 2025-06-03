@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
 public class LoginActivity extends AppCompatActivity {
@@ -65,13 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         String role = snapshot.child("role").getValue(String.class);
-
                         if ("admin".equals(role)) {
-                            startActivity(new Intent(LoginActivity.this, AdminActivity.class)); // Замени на свой класс
+                            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                         } else {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class)); // или HomeActivity
                         }
-                        finish();
+                        finish(); // Закрыть LoginActivity
                     }
 
                     @Override
@@ -85,7 +83,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rent_it.Adapter.PostAdapter;
+import com.example.rent_it.BookingsActivity;
 import com.example.rent_it.Model.Post;
 import com.example.rent_it.R;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.content.Intent;
+import androidx.cardview.widget.CardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        CardView cardMyBookings = view.findViewById(R.id.card_my_bookings);
+        cardMyBookings.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), BookingsActivity.class));
+        });
 
         editTextSearch = view.findViewById(R.id.editText_search);
         recyclerView = view.findViewById(R.id.recycler_view);

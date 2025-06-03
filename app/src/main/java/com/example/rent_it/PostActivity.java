@@ -137,12 +137,17 @@ public class PostActivity extends AppCompatActivity {
         hashMap.put("email", userEmail);
         hashMap.put("price", etPrice.getText().toString());
         hashMap.put("location", etLocation.getText().toString());
+// Защита от NullPointer
+        Object typeItem = spinnerType.getSelectedItem();
+        Object buildingTypeItem = spinnerBuildingType.getSelectedItem();
+        Object heatingItem = spinnerHeating.getSelectedItem();
+        Object wifiItem = spinnerWifi.getSelectedItem();
 
-        // Поля из Spinner
-        hashMap.put("type", spinnerType.getSelectedItem().toString());
-        hashMap.put("buildingType", spinnerBuildingType.getSelectedItem().toString());
-        hashMap.put("heating", spinnerHeating.getSelectedItem().toString());
-        hashMap.put("wifi", spinnerWifi.getSelectedItem().toString());
+        hashMap.put("type", typeItem != null ? typeItem.toString() : "не указано");
+        hashMap.put("buildingType", buildingTypeItem != null ? buildingTypeItem.toString() : "не указано");
+        hashMap.put("heating", heatingItem != null ? heatingItem.toString() : "не указано");
+        hashMap.put("wifi", wifiItem != null ? wifiItem.toString() : "не указано");
+
 
         // Остальные поля
         hashMap.put("bedrooms", etBedrooms.getText().toString());

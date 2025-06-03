@@ -3,6 +3,24 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+// ПРАВИЛЬНО РАЗМЕСТИТЬ ЗДЕСЬ:
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    try {
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        // ОТЛАДОЧНЫЙ ВЫВОД:
+        println "DEBUG: Value read for GEMINI_API_KEY from local.properties = '" + properties.getProperty('GEMINI_API_KEY') + "'"
+        if (properties.getProperty('GEMINI_API_KEY') == null) {
+            println "DEBUG: GEMINI_API_KEY is NULL in local.properties!"
+        }
+    } catch (Exception e) {
+        println "DEBUG: Error loading local.properties: " + e.getMessage()
+        e.printStackTrace() // Печатаем полный стектрейс ошибки
+    }
+} else {
+    println "DEBUG: local.properties file does not exist."
+}
+
 android {
     namespace 'com.example.rent_it'
     compileSdk 34
@@ -15,8 +33,15 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Получаем значение, если оно null, используем плейсхолдер
+        def apiKey = properties.getProperty('GEMINI_API_KEY', 'API_KEY_NOT_SET_IN_LOCAL_PROPERTIES')
+        // Еще один отладочный вывод для значения, которое пойдет в buildConfigField
+        println "DEBUG: API Key to be used in buildConfigField = '" + apiKey + "'"
+        buildConfigField("String", "GEMINI_API_KEY", "\"${apiKey}\"")
     }
 
+    // ... остальная часть вашего build.gradle (buildTypes, compileOptions, buildFeatures, dependencies) ...
     buildTypes {
         release {
             minifyEnabled false
@@ -27,29 +52,38 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        buildConfig true
+    }
 }
 
-dependencies {
 
-    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+dependencies {
+    // ... ваши зависимости ...
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'org.json:json:20210307'
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
+    implementation("com.google.guava:guava:32.1.3-android")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1")) // Обновите до актуальной версии, если нужно
     implementation("com.google.firebase:firebase-analytics")
+    // implementation 'com.google.firebase:firebase-appcheck-playintegrity' // AppCheck обычно настраивается через Firebase консоль и требует более специфичных шагов
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation platform('com.google.firebase:firebase-bom:32.2.2')
+    implementation 'com.google.android.material:material:1.12.0' // Рекомендую обновить material
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
-    implementation 'com.google.firebase:firebase-auth:22.0.0'
-    implementation 'com.google.firebase:firebase-database:20.2.2'
-    implementation 'com.google.firebase:firebase-storage:20.2.1'
+    implementation 'com.google.android.gms:play-services-auth:21.2.0' // Рекомендую обновить play-services-auth
+
+    implementation 'com.google.firebase:firebase-auth' // Версия будет из BOM
+    implementation 'com.google.firebase:firebase-database' // Версия будет из BOM
+    implementation 'com.google.firebase:firebase-storage' // Версия будет из BOM
+
+    implementation 'com.github.bumptech.glide:glide:4.16.0' // Рекомендую обновить Glide
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0' // Версия должна совпадать с glide
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'com.google.firebase:firebase-auth:22.3.1'
-    implementation 'com.google.firebase:firebase-database:20.3.0'
-    implementation 'com.google.firebase:firebase-storage:20.3.0'
-    implementation 'com.github.bumptech.glide:glide:4.15.1' // или новее
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
-
 }

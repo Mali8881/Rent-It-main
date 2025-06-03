@@ -7,17 +7,21 @@ public class Booking {
     private String startDate;
     private String endDate;
     private String status;
+    private String message; // новое поле
+
 
     public Booking() {
     }
 
-    public Booking(String bookingId, String postId, String userId, String startDate, String endDate, String status) {
+    public Booking(String bookingId, String postId, String userId, String startDate, String endDate, String status, String message) {
         this.bookingId = bookingId;
         this.postId = postId;
         this.userId = userId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.message = message;
+
     }
 
     public String getBookingId() {
@@ -66,5 +70,13 @@ public class Booking {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

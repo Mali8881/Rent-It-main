@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,6 +56,19 @@ public class DetailsActivity extends AppCompatActivity {
                 .load(intent.getStringExtra("image"))
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imageView);
+
+        btnBook.setOnClickListener(v -> {
+            String postId = getIntent().getStringExtra("postId");
+            if (postId != null && !postId.isEmpty()) {
+                Intent bookIntent = new Intent(DetailsActivity.this, BookingActivity.class);
+                bookIntent.putExtra("postId", postId);
+                startActivity(bookIntent);
+            } else {
+                // если вдруг postId не передали
+                Toast.makeText(DetailsActivity.this, "Ошибка: ID жилья не найден", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
 

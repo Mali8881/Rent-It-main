@@ -32,14 +32,25 @@
         android:layout_marginBottom="32dp" />
 
     <!-- Кнопка бронирования -->
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_input"
+        android:hint="Оставьте сообщение владельцу"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA" />
+
     <Button
         android:id="@+id/btnBook"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@drawable/bg_button_blue"
         android:text="Забронировать"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:background="@drawable/bg_button_blue" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

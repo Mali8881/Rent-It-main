@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rent_it.Adapter.UserAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 
@@ -76,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                 reference.setValue(map).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         if (role.equals("admin")) {
-                            startActivity(new Intent(RegisterActivity.this, AdminActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, UserAdapter.class));
                         } else {
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         }

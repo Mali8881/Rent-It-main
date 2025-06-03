@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:enableOnBackInvokedCallback="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,11 +21,14 @@
         <activity android:name=".RegisterActivity"/>
         <activity
             android:name=".BookingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity android:name=".MyBookingsActivity"/>
         <activity android:name=".DetailsActivity" />
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".AdminActivity" />
+        <activity android:name=".BookingsActivity" />
+        <activity android:name=".FavoritesActivity" />
+
 
         <activity
             android:name=".PostActivity"
